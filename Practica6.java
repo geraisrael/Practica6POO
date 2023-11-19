@@ -4,19 +4,19 @@
 
 package gerardo.gonzalez.uabc.practica6;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Practica6 {
 
     public static void main(String[] args) {
         try {
-            Map<String, String> chuckNorrisJokeMap = obtenerChuckNorrisJoke();
+            HashMap<String, String> chuckNorrisJokeMap = obtenerChuckNorrisJoke();
             String textoChiste = obtenerTextoDelChiste(chuckNorrisJokeMap.get("chiste"));
             String urlChiste = chuckNorrisJokeMap.get("url");
 
@@ -27,7 +27,7 @@ public class Practica6 {
         }
     }
 
-    private static Map<String, String> obtenerChuckNorrisJoke() throws IOException {
+    private static HashMap<String, String> obtenerChuckNorrisJoke() throws IOException {
         String apiUrl = "https://api.chucknorris.io/jokes/random";
         URL url = new URL(apiUrl);
 
@@ -47,10 +47,9 @@ public class Practica6 {
             reader.close();
 
             // Parsear la respuesta JSON y almacenarla en un HashMap
-            Map<String, String> chuckNorrisJokeMap = Map.of(
-                    "chiste", response.toString(),
-                    "url", obtenerUrlDelChiste(response.toString())
-            );
+            HashMap<String, String> chuckNorrisJokeMap = new HashMap<>();
+            chuckNorrisJokeMap.put("chiste", response.toString());
+            chuckNorrisJokeMap.put("url", obtenerUrlDelChiste(response.toString()));
 
             return chuckNorrisJokeMap;
         } else {
